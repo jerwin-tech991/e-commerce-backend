@@ -1,0 +1,38 @@
+#services:
+#  postgres:
+#    image: postgres:16
+#    container_name: mp_postgres
+#    environment:
+#      POSTGRES_DB: marketplace
+#      POSTGRES_USER: marketplace
+#      POSTGRES_PASSWORD: marketplace
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - mp_pg_data:/var/lib/postgresql/data
+
+  elasticsearch:
+    image: elastic/elasticsearch:8.19.10
+    container_name: mp_es
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+    volumes:
+      - mp_es_data:/usr/share/elasticsearch/data
+
+#  kibana:
+#    image: elastic/kibana:8.19.10
+#    container_name: mp_kibana
+#    environment:
+#      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+#    ports:
+#      - "5601:5601"
+#    depends_on:
+#      - elasticsearch
+
+volumes:
+  mp_pg_data:
+  mp_es_data:
